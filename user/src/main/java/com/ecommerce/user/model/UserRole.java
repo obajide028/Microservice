@@ -1,4 +1,4 @@
-package com.ecommerce.user;
+package com.ecommerce.user.model;
 
 public enum UserRole {
 
