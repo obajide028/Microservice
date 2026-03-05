@@ -1,7 +1,8 @@
 package com.ecommerce.Order.controller;
 
-import com.example.e_com_mo.dto.OrderResponse;
-import com.example.e_com_mo.service.OrderService;
+
+import com.ecommerce.Order.dto.OrderResponse;
+import com.ecommerce.Order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

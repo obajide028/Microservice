@@ -7,6 +7,7 @@ import com.ecommerce.Order.models.CartItem;
 import com.ecommerce.Order.models.Order;
 import com.ecommerce.Order.models.OrderItem;
 import com.ecommerce.Order.models.OrderStatus;
+import com.ecommerce.Order.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class OrderService {
 
     private final CartService cartService;
+    private final OrderRepository orderRepository;
 
 
     public Optional<OrderResponse> createOrder(String userId) {
@@ -43,7 +45,7 @@ public class OrderService {
 
         // create order
         Order order = new Order();
-        order.setUserId(userId);
+        order.setUserId(Long.valueOf(userId));
         order.setStatus(OrderStatus.CONFIRMED);
         order.setTotalAmount(totalPrice);
 

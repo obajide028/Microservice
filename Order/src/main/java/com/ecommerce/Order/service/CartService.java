@@ -48,43 +48,37 @@ public class CartService {
        } else {
 
            CartItem cartItem = new CartItem();
-           cartItem.setUserId(userId);
-           cartItem.setProductId(cartItem.getProductId());
+           cartItem.setUserId(String.valueOf(Long.valueOf(userId)));
+           cartItem.setProductId(String.valueOf(Long.valueOf(request.getProductId())));
            cartItem.setQuantity(request.getQuantity());
-           cartItem.setPrice(product.getPrice().multiply(BigDecimal.valueOf(request.getQuantity())));
+           cartItem.setPrice(BigDecimal.valueOf(1000.00));
            cartItemRepository.save(cartItem);
        }
         return true;
     }
 
-    public boolean deleteItemFromCart(String userId, Long productId) {
+    public boolean deleteItemFromCart(String userId, String productId) {
 
-        Optional<Product> productOpt = productRepository.findById(productId);
-
-        Optional<User> userOpt = userRepository.findById(Long.valueOf(userId));
-
-        if (productOpt.isPresent() && userOpt.isPresent()
+        CartItem cartItem = cartItemRepository.findByUserIdAndProductId(userId, productId);
 
 
-        ) {
-            cartItemRepository.deleteByUserAndProduct(userOpt.get(), productOpt.get());
+        if (cartItem != null) {
+            cartItemRepository.delete(cartItem);
             return true;
         }
-        return  false;
+        return false;
+
+
     }
 
     public List<CartItem> getCart(String userId) {
 
-        return userRepository.findById(Long.valueOf(userId))
-                .map(cartItemRepository::findByUser)
-                .orElseGet(List::of);
+        return cartItemRepository.findByUserId(userId);
 
     }
 
     public void clearCart(String userId) {
-       userRepository.findById(Long.valueOf(userId)).ifPresent(
-               cartItemRepository::deleteByUser
-       );
+     cartItemRepository.deleteByUserId(userId);
 
     }
 }

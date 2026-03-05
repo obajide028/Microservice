@@ -1,8 +1,8 @@
 package com.ecommerce.Order.controller;
 
-import com.example.e_com_mo.dto.CartItemRequest;
-import com.example.e_com_mo.model.CartItem;
-import com.example.e_com_mo.service.CartService;
+import com.ecommerce.Order.dto.CartItemRequest;
+import com.ecommerce.Order.models.CartItem;
+import com.ecommerce.Order.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/cart")
 @RequiredArgsConstructor
-public class CartController {
+public class  CartController {
 
     private final CartService cartService;
 
@@ -31,7 +31,7 @@ public class CartController {
     @DeleteMapping("/items/{productId}")
     public ResponseEntity<Void> removeFromCart(
             @RequestHeader("X-User-ID") String userId,
-            @PathVariable Long productId) {
+            @PathVariable String productId) {
 
         boolean deleted = cartService.deleteItemFromCart(userId, productId);
         return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
